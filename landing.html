@@ -169,6 +169,75 @@
             animation: storyPulse 2.8s ease-in-out infinite;
         }
 
+        .hero-panel {
+            min-height: 100vh;
+        }
+
+        .hero-image-frame {
+            position: relative;
+            overflow: hidden;
+            background: #EFECE6;
+            border: 1px solid rgba(28, 29, 27, 0.08);
+        }
+
+        .hero-image-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(0.16) sepia(0.12) contrast(0.96);
+            transform: scale(1.08);
+        }
+
+        .hero-image-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(28, 29, 27, 0.52), transparent 42%);
+            pointer-events: none;
+        }
+
+        .hero-caption {
+            position: absolute;
+            left: 1.25rem;
+            right: 1.25rem;
+            bottom: 1.25rem;
+            z-index: 2;
+            color: #FDFDFB;
+        }
+
+        .hero-image-index {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 2;
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 999px;
+            background: rgba(253, 253, 251, 0.88);
+            color: #ef262b;
+            display: grid;
+            place-items: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+        }
+
+        .hero-progress-rail {
+            position: absolute;
+            left: 2rem;
+            right: 2rem;
+            bottom: 2rem;
+            height: 1px;
+            background: rgba(28, 29, 27, 0.14);
+            z-index: 20;
+        }
+
+        .hero-progress-rail span {
+            display: block;
+            width: 0%;
+            height: 100%;
+            background: #ef262b;
+        }
+
         @keyframes storyPulse {
             0%, 100% { transform: scale(1); opacity: 0.7; }
             50% { transform: scale(1.08); opacity: 1; }
@@ -184,6 +253,10 @@
                 display: block;
                 margin-bottom: 0.75rem;
                 font-size: 2.4rem;
+            }
+
+            .hero-progress-rail {
+                display: none;
             }
         }
 
@@ -255,59 +328,147 @@
         <span id="sound-status-text">Score: Ambient Off</span>
     </button>
 
-    <section id="hero" class="relative w-full h-screen overflow-hidden flex items-center justify-start px-8 md:px-24 bg-warmCream">
+    <section id="hero" class="relative w-full min-h-screen md:h-screen overflow-visible md:overflow-hidden bg-warmCream">
         <!-- Parallax Background Image -->
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1920" class="w-full h-full object-cover opacity-35 filter grayscale sepia-[20%] contrast-[95%] scale-105" id="hero-bg" alt="Candid photograph of students smiling in a deep learning environment">
             <div class="absolute inset-0 bg-gradient-to-t from-warmCream via-transparent to-warmCream/10"></div>
         </div>
 
-        <!-- Hero Typography Container -->
-        <div class="relative z-10 max-w-5xl mt-16 space-y-8">
-            <span class="text-[11px] tracking-[6px] uppercase text-brandRed font-semibold block mb-2">A Grassroots Action Collective</span>
-            <h1 class="font-serif text-4xl sm:text-6xl md:text-[5.5rem] font-light tracking-tight leading-[1.1] text-charcoal" id="hero-headline">
-                Rights Over Rescue.<br>Dignity Over Charity.
-            </h1>
-            <p id="hero-storyline" class="text-clayGray font-light text-base md:text-xl max-w-2xl leading-relaxed">
-                A girl enters with a question. Her mother enters with a skill. SSK turns both into a shared path toward study, income, and public dignity.
-            </p>
-            <div class="flex flex-wrap items-center gap-3 text-[10px] md:text-[11px] tracking-[4px] uppercase font-semibold text-charcoal/70" id="hero-kinetic-strip">
-                <span class="kinetic-word">Listen</span>
-                <span class="w-8 h-[1px] bg-brandRed/50"></span>
-                <span class="kinetic-word">Equip</span>
-                <span class="w-8 h-[1px] bg-brandRed/50"></span>
-                <span class="kinetic-word">Trust</span>
-                <span class="w-8 h-[1px] bg-brandRed/50"></span>
-                <span class="kinetic-word">Transfer Power</span>
-            </div>
-            <div class="flex flex-wrap gap-6 items-center pt-4">
-                <button onclick="toggleDrawer('donate-drawer')" class="px-8 py-4 bg-brandRed hover:bg-charcoal text-warmWhite text-[11px] uppercase tracking-[3px] font-semibold rounded-full transition-all duration-300 shadow-md">
-                    Sponsor Educational Pathways
-                </button>
-                <button onclick="toggleDrawer('volunteer-drawer')" class="px-8 py-4 border border-charcoal/20 hover:border-brandRed hover:text-brandRed text-charcoal text-[11px] uppercase tracking-[3px] font-semibold rounded-full transition-all duration-300 bg-transparent">
-                    Join Our Working Council
-                </button>
-            </div>
-        </div>
+        <div id="hero-horizontal-track" class="relative z-10 flex flex-col md:flex-row md:h-full md:w-max">
+            <article id="hero-panel-intro" class="hero-panel w-full md:w-screen shrink-0 grid grid-cols-1 xl:grid-cols-12 gap-10 items-center px-8 md:px-24 py-20 md:py-0">
+                <div class="xl:col-span-7 max-w-5xl space-y-8">
+                    <span class="text-[11px] tracking-[6px] uppercase text-brandRed font-semibold block mb-2">A Grassroots Action Collective</span>
+                    <h1 class="font-serif text-4xl sm:text-6xl md:text-[5.5rem] font-light tracking-tight leading-[1.1] text-charcoal" id="hero-headline">
+                        Rights Over Rescue.<br>Dignity Over Charity.
+                    </h1>
+                    <p id="hero-storyline" class="text-clayGray font-light text-base md:text-xl max-w-2xl leading-relaxed">
+                        A girl enters with a question. Her mother enters with a skill. SSK turns both into a shared path toward study, income, and public dignity.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3 text-[10px] md:text-[11px] tracking-[4px] uppercase font-semibold text-charcoal/70" id="hero-kinetic-strip">
+                        <span class="kinetic-word">Listen</span>
+                        <span class="w-8 h-[1px] bg-brandRed/50"></span>
+                        <span class="kinetic-word">Equip</span>
+                        <span class="w-8 h-[1px] bg-brandRed/50"></span>
+                        <span class="kinetic-word">Trust</span>
+                        <span class="w-8 h-[1px] bg-brandRed/50"></span>
+                        <span class="kinetic-word">Transfer Power</span>
+                    </div>
+                    <div class="flex flex-wrap gap-6 items-center pt-4">
+                        <button onclick="toggleDrawer('donate-drawer')" class="px-8 py-4 bg-brandRed hover:bg-charcoal text-warmWhite text-[11px] uppercase tracking-[3px] font-semibold rounded-full transition-all duration-300 shadow-md">
+                            Sponsor Educational Pathways
+                        </button>
+                        <button onclick="toggleDrawer('volunteer-drawer')" class="px-8 py-4 border border-charcoal/20 hover:border-brandRed hover:text-brandRed text-charcoal text-[11px] uppercase tracking-[3px] font-semibold rounded-full transition-all duration-300 bg-transparent">
+                            Join Our Working Council
+                        </button>
+                    </div>
+                </div>
 
-        <div class="hidden xl:block absolute right-24 top-1/2 -translate-y-1/2 z-10 w-72 border-l border-brandRed/30 pl-8 space-y-5" id="hero-side-note">
-            <span class="text-[9px] tracking-[5px] uppercase text-brandRed font-semibold">Opening Scene</span>
-            <p class="font-serif text-2xl leading-snug text-charcoal">
-                The story begins when help stops arriving as charity and starts staying as capability.
-            </p>
-            <div class="flex items-center gap-3 text-[10px] tracking-[3px] uppercase text-clayGray">
-                <span class="w-2 h-2 rounded-full bg-brandRed story-pulse"></span>
-                Field note 01
-            </div>
+                <div class="xl:col-span-5 hidden xl:grid grid-cols-2 gap-5 items-center">
+                    <div class="hero-image-frame h-[52vh] rounded-sm translate-y-12">
+                        <span class="hero-image-index">01</span>
+                        <img src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=900" alt="Children learning together in a community education space">
+                        <div class="hero-caption">
+                            <span class="text-[9px] tracking-[4px] uppercase text-brandRed font-semibold">The First Frame</span>
+                            <p class="font-serif text-xl leading-snug mt-2">Curiosity arrives before confidence.</p>
+                        </div>
+                    </div>
+                    <div class="hero-image-frame h-[42vh] rounded-sm -translate-y-10">
+                        <span class="hero-image-index">02</span>
+                        <img src="https://images.unsplash.com/photo-1516880711640-ef7db81be3e1?q=80&w=900" alt="A student exploring a tablet with an instructor">
+                        <div class="hero-caption">
+                            <span class="text-[9px] tracking-[4px] uppercase text-brandRed font-semibold">Tool In Hand</span>
+                            <p class="font-serif text-xl leading-snug mt-2">A device becomes a doorway.</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="hero-panel w-full md:w-screen shrink-0 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center px-8 md:px-24 py-20 md:py-0 bg-warmWhite/88">
+                <div class="lg:col-span-7">
+                    <div class="hero-image-frame h-[64vh] rounded-sm">
+                        <span class="hero-image-index">03</span>
+                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1400" alt="Students gathered around learning materials with a teacher">
+                        <div class="hero-caption">
+                            <span class="text-[9px] tracking-[4px] uppercase text-brandRed font-semibold">Scene One / Access</span>
+                            <p class="font-serif text-3xl md:text-4xl leading-tight mt-2">The road to school becomes a room inside the community.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="text-[10px] tracking-[6px] uppercase text-brandRed font-semibold">Image-Led Storytelling</span>
+                    <h2 class="font-serif text-4xl md:text-6xl font-light leading-tight text-charcoal">She does not wait for permission to begin.</h2>
+                    <p class="text-clayGray font-light leading-relaxed">
+                        The first visual is simple: a student looking down at a page, surrounded by tools that stay. No staged miracle, just repeated access until learning feels normal.
+                    </p>
+                </div>
+            </article>
+
+            <article class="hero-panel w-full md:w-screen shrink-0 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center px-8 md:px-24 py-20 md:py-0 bg-charcoal text-warmWhite">
+                <div class="lg:col-span-5 space-y-6 order-2 lg:order-1">
+                    <span class="text-[10px] tracking-[6px] uppercase text-brandRed font-semibold">Scene Two / Income</span>
+                    <h2 class="font-serif text-4xl md:text-6xl font-light leading-tight">Her skill enters the market with a name.</h2>
+                    <p class="text-warmWhite/60 font-light leading-relaxed">
+                        The camera moves from classroom to workshop. Needles, textiles, ledgers, and collective pricing turn quiet skill into visible economic agency.
+                    </p>
+                </div>
+                <div class="lg:col-span-7 order-1 lg:order-2 grid grid-cols-2 gap-5">
+                    <div class="hero-image-frame h-[58vh] rounded-sm">
+                        <span class="hero-image-index">04</span>
+                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1000" alt="Women working together in a craft and design session">
+                        <div class="hero-caption">
+                            <span class="text-[9px] tracking-[4px] uppercase text-brandRed font-semibold">Guild Practice</span>
+                            <p class="font-serif text-2xl leading-tight mt-2">Hands that were unseen become organized work.</p>
+                        </div>
+                    </div>
+                    <div class="hero-image-frame h-[44vh] rounded-sm self-end">
+                        <span class="hero-image-index">05</span>
+                        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1000" alt="Women planning and collaborating around a shared work table">
+                        <div class="hero-caption">
+                            <span class="text-[9px] tracking-[4px] uppercase text-brandRed font-semibold">Shared Ledger</span>
+                            <p class="font-serif text-2xl leading-tight mt-2">The group learns to negotiate together.</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="hero-panel w-full md:w-screen shrink-0 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center px-8 md:px-24 py-20 md:py-0 bg-warmCream">
+                <div class="lg:col-span-7">
+                    <div class="hero-image-frame h-[64vh] rounded-sm">
+                        <span class="hero-image-index">06</span>
+                        <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1400" alt="Women leaders gathered for community consultation">
+                        <div class="hero-caption">
+                            <span class="text-[9px] tracking-[4px] uppercase text-brandRed font-semibold">Scene Three / Agency</span>
+                            <p class="font-serif text-3xl md:text-4xl leading-tight mt-2">A family stops being helped and starts helping decide.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-5 space-y-7">
+                    <span class="text-[10px] tracking-[6px] uppercase text-brandRed font-semibold">The Turn</span>
+                    <h2 class="font-serif text-4xl md:text-6xl font-light leading-tight text-charcoal">This is where the story changes ownership.</h2>
+                    <p class="text-clayGray font-light leading-relaxed">
+                        Education and income begin to reinforce each other. Attendance holds, decisions sharpen, and local leaders emerge from the same rooms where the work began.
+                    </p>
+                    <div class="flex flex-wrap gap-6 pt-2">
+                        <button onclick="toggleDrawer('donate-drawer')" class="px-8 py-4 bg-brandRed hover:bg-charcoal text-warmWhite text-[11px] uppercase tracking-[3px] font-semibold rounded-full transition-all duration-300 shadow-md">
+                            Sponsor The Next Frame
+                        </button>
+                        <button onclick="toggleDrawer('volunteer-drawer')" class="px-8 py-4 border border-charcoal/20 hover:border-brandRed hover:text-brandRed text-charcoal text-[11px] uppercase tracking-[3px] font-semibold rounded-full transition-all duration-300 bg-transparent">
+                            Join The Field Team
+                        </button>
+                    </div>
+                </div>
+            </article>
         </div>
 
         <!-- Elegant Downward Indicator -->
-        <div class="absolute bottom-12 right-8 md:right-24 flex items-center gap-4 text-[10px] tracking-[4px] uppercase text-clayGray">
-            <span>Scroll To Read Journal</span>
+        <div class="hidden md:flex absolute bottom-12 right-8 md:right-24 z-20 items-center gap-4 text-[10px] tracking-[4px] uppercase text-clayGray">
+            <span>Scroll The Opening Story</span>
             <span class="w-12 h-[1px] bg-charcoal/20 relative overflow-hidden">
                 <span class="absolute top-0 left-0 h-full w-1/2 bg-brandRed animate-[ping_1.5s_infinite]"></span>
             </span>
         </div>
+        <div class="hero-progress-rail"><span id="hero-progress-fill"></span></div>
     </section>
 
     <section id="about" class="relative py-24 md:py-40 px-8 md:px-24 bg-warmWhite border-y border-sandSoft">
@@ -1032,7 +1193,7 @@
                 duration: 1.4,
                 ease: "power4.out"
             }, 0.2)
-            .from("#hero p", {
+            .from("#hero-panel-intro p", {
                 y: 25,
                 opacity: 0,
                 duration: 1.2,
@@ -1051,13 +1212,14 @@
                 duration: 0.9,
                 ease: "power3.out"
             }, "-=0.55")
-            .from("#hero-side-note", {
-                x: 36,
+            .from("#hero-panel-intro .hero-image-frame", {
+                y: 44,
                 opacity: 0,
+                stagger: 0.18,
                 duration: 1.1,
                 ease: "power3.out"
-            }, "-=0.9")
-            .from("#hero button", {
+            }, "-=0.85")
+            .from("#hero-panel-intro button", {
                 y: 20,
                 opacity: 0,
                 stagger: 0.15,
@@ -1065,17 +1227,78 @@
                 ease: "power3.out"
             }, "-=0.9");
 
-            // Parallax effect on hero backdrop
-            gsap.to("#hero-bg", {
-                scrollTrigger: {
-                    trigger: "#hero",
-                    start: "top top",
-                    end: "bottom top",
-                    scrub: true
-                },
-                yPercent: 12,
-                ease: "none"
-            });
+            if (window.innerWidth >= 768) {
+                const heroTrack = document.getElementById('hero-horizontal-track');
+                const heroProgressFill = document.getElementById('hero-progress-fill');
+
+                const heroHorizontalTween = gsap.to(heroTrack, {
+                    x: () => -(heroTrack.scrollWidth - window.innerWidth),
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: "#hero",
+                        pin: true,
+                        scrub: 1,
+                        start: "top top",
+                        end: () => `+=${heroTrack.scrollWidth - window.innerWidth}`,
+                        invalidateOnRefresh: true,
+                        onUpdate: self => {
+                            if (heroProgressFill) heroProgressFill.style.width = `${self.progress * 100}%`;
+                        }
+                    }
+                });
+
+                gsap.to("#hero-bg", {
+                    opacity: 0.12,
+                    scale: 1.14,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: "#hero",
+                        start: "top top",
+                        end: () => `+=${heroTrack.scrollWidth - window.innerWidth}`,
+                        scrub: true
+                    }
+                });
+
+                gsap.to(".hero-image-frame img", {
+                    scale: 1,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: "#hero",
+                        start: "top top",
+                        end: () => `+=${heroTrack.scrollWidth - window.innerWidth}`,
+                        scrub: true
+                    }
+                });
+
+                document.querySelectorAll('.hero-panel').forEach((panel) => {
+                    if (panel.id === 'hero-panel-intro') return;
+
+                    gsap.from(panel.querySelectorAll('h2, p, .hero-image-frame'), {
+                        x: 70,
+                        opacity: 0,
+                        stagger: 0.08,
+                        duration: 0.9,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: panel,
+                            containerAnimation: heroHorizontalTween,
+                            start: "left 70%",
+                            once: true
+                        }
+                    });
+                });
+            } else {
+                gsap.to(".hero-image-frame img", {
+                    scrollTrigger: {
+                        trigger: "#hero",
+                        start: "top top",
+                        end: "bottom top",
+                        scrub: true
+                    },
+                    scale: 1,
+                    ease: "none"
+                });
+            }
 
             gsap.to("#about-heading .line-mask > span", {
                 scrollTrigger: {
