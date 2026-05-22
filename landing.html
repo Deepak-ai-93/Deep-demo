@@ -110,6 +110,83 @@
             transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s ease;
         }
 
+        .line-mask {
+            display: block;
+            overflow: hidden;
+        }
+
+        .line-mask > span {
+            display: inline-block;
+            transform: translateY(115%);
+            opacity: 0;
+        }
+
+        .kinetic-word {
+            display: inline-block;
+            position: relative;
+            color: #1C1D1B;
+            --underline: 0%;
+            background-image: linear-gradient(rgba(239, 38, 43, 0.18), rgba(239, 38, 43, 0.18));
+            background-repeat: no-repeat;
+            background-size: var(--underline) 0.22em;
+            background-position: 0 88%;
+        }
+
+        .story-kicker {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        .story-atmosphere {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(239, 38, 43, 0.95) 0, transparent 28%),
+                radial-gradient(circle at 80% 70%, rgba(253, 253, 251, 0.85) 0, transparent 24%);
+        }
+
+        .story-step {
+            opacity: 0.34;
+            transform: translateY(28px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .story-step.is-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-step::before {
+            content: attr(data-step);
+            position: absolute;
+            left: -3.5rem;
+            top: 0.25rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            line-height: 1;
+            color: rgba(239, 38, 43, 0.16);
+        }
+
+        .story-pulse {
+            animation: storyPulse 2.8s ease-in-out infinite;
+        }
+
+        @keyframes storyPulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .story-kicker {
+                writing-mode: horizontal-tb;
+            }
+
+            .story-step::before {
+                position: static;
+                display: block;
+                margin-bottom: 0.75rem;
+                font-size: 2.4rem;
+            }
+        }
+
         /* Clean Image Reveal Animation Mask */
         .reveal-mask {
             clip-path: inset(100% 0% 0% 0%);
@@ -156,55 +233,6 @@
 </head>
 <body class="bg-warmCream text-charcoal font-sans antialiased selection:bg-brandRed selection:text-warmWhite overflow-x-hidden">
 
-    <!-- Responsive Sticky Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-warmCream/95 backdrop-blur-sm border-b border-sandSoft">
-        <div class="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8 py-3 md:py-4">
-            <a href="/" class="flex items-center gap-3" aria-label="SSK Home">
-                <img src="https://sssk.ngo/wp-content/uploads/2025/08/logo.png.webp" alt="SSK Logo" class="h-10 md:h-12 w-auto shadow-sm bg-warmWhite/60 rounded-sm p-1">
-                <span class="hidden md:inline font-serif text-lg text-charcoal">SSK</span>
-            </a>
-
-            <nav class="hidden md:flex items-center gap-6" aria-label="Primary">
-                <a href="#about" class="editorial-link text-sm text-charcoal hover:text-brandRed">About</a>
-                <a href="#chapters" class="editorial-link text-sm text-charcoal hover:text-brandRed">Programs</a>
-                <a href="#gallery-grid" class="editorial-link text-sm text-charcoal hover:text-brandRed">Gallery</a>
-                <a href="#impact-metrics" class="editorial-link text-sm text-charcoal hover:text-brandRed">Impact</a>
-                <a href="#donate-drawer" class="px-4 py-2 bg-brandRed text-warmWhite rounded-full text-xs">Donate</a>
-            </nav>
-
-            <div class="md:hidden flex items-center gap-3">
-                <button id="mobile-menu-button" aria-controls="mobile-menu" aria-expanded="false" class="p-2 rounded-md bg-warmWhite/60 border border-sandSoft" onclick="toggleMobileMenu()">
-                    <span class="sr-only">Open menu</span>
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="md:hidden hidden border-t border-sandSoft bg-warmWhite/95">
-            <div class="px-4 py-3 space-y-3">
-                <a href="#about" class="block text-charcoal" onclick="toggleMobileMenu()">About</a>
-                <a href="#chapters" class="block text-charcoal" onclick="toggleMobileMenu()">Programs</a>
-                <a href="#gallery-grid" class="block text-charcoal" onclick="toggleMobileMenu()">Gallery</a>
-                <a href="#impact-metrics" class="block text-charcoal" onclick="toggleMobileMenu()">Impact</a>
-                <a href="#donate-drawer" class="block text-charcoal font-semibold py-2" onclick="toggleDrawer('donate-drawer'); toggleMobileMenu();">Donate</a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Spacer to offset fixed header -->
-    <div class="h-16 md:h-20"></div>
-
-    <script>
-        function toggleMobileMenu(){
-            const btn = document.getElementById('mobile-menu-button');
-            const menu = document.getElementById('mobile-menu');
-            const expanded = btn.getAttribute('aria-expanded') === 'true';
-            btn.setAttribute('aria-expanded', String(!expanded));
-            menu.classList.toggle('hidden');
-        }
-    </script>
-
     <!-- Film Grain Texture Overlay -->
     <div class="film-grain"></div>
 
@@ -240,9 +268,18 @@
             <h1 class="font-serif text-4xl sm:text-6xl md:text-[5.5rem] font-light tracking-tight leading-[1.1] text-charcoal" id="hero-headline">
                 Rights Over Rescue.<br>Dignity Over Charity.
             </h1>
-            <p class="text-clayGray font-light text-base md:text-xl max-w-2xl leading-relaxed">
-                SSK constructs self-sustaining structures that provide rural girls with continuous digital curricula and mothers with economic independence through craft-to-finance guilds.
+            <p id="hero-storyline" class="text-clayGray font-light text-base md:text-xl max-w-2xl leading-relaxed">
+                A girl enters with a question. Her mother enters with a skill. SSK turns both into a shared path toward study, income, and public dignity.
             </p>
+            <div class="flex flex-wrap items-center gap-3 text-[10px] md:text-[11px] tracking-[4px] uppercase font-semibold text-charcoal/70" id="hero-kinetic-strip">
+                <span class="kinetic-word">Listen</span>
+                <span class="w-8 h-[1px] bg-brandRed/50"></span>
+                <span class="kinetic-word">Equip</span>
+                <span class="w-8 h-[1px] bg-brandRed/50"></span>
+                <span class="kinetic-word">Trust</span>
+                <span class="w-8 h-[1px] bg-brandRed/50"></span>
+                <span class="kinetic-word">Transfer Power</span>
+            </div>
             <div class="flex flex-wrap gap-6 items-center pt-4">
                 <button onclick="toggleDrawer('donate-drawer')" class="px-8 py-4 bg-brandRed hover:bg-charcoal text-warmWhite text-[11px] uppercase tracking-[3px] font-semibold rounded-full transition-all duration-300 shadow-md">
                     Sponsor Educational Pathways
@@ -250,6 +287,17 @@
                 <button onclick="toggleDrawer('volunteer-drawer')" class="px-8 py-4 border border-charcoal/20 hover:border-brandRed hover:text-brandRed text-charcoal text-[11px] uppercase tracking-[3px] font-semibold rounded-full transition-all duration-300 bg-transparent">
                     Join Our Working Council
                 </button>
+            </div>
+        </div>
+
+        <div class="hidden xl:block absolute right-24 top-1/2 -translate-y-1/2 z-10 w-72 border-l border-brandRed/30 pl-8 space-y-5" id="hero-side-note">
+            <span class="text-[9px] tracking-[5px] uppercase text-brandRed font-semibold">Opening Scene</span>
+            <p class="font-serif text-2xl leading-snug text-charcoal">
+                The story begins when help stops arriving as charity and starts staying as capability.
+            </p>
+            <div class="flex items-center gap-3 text-[10px] tracking-[3px] uppercase text-clayGray">
+                <span class="w-2 h-2 rounded-full bg-brandRed story-pulse"></span>
+                Field note 01
             </div>
         </div>
 
@@ -297,6 +345,55 @@
                 </div>
             </div>
 
+        </div>
+    </section>
+
+    <section id="story-arc" class="relative py-24 md:py-36 px-8 md:px-24 bg-charcoal text-warmWhite overflow-hidden">
+        <div class="story-atmosphere absolute inset-0 opacity-[0.07]"></div>
+        <div class="relative max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+            <div class="lg:col-span-4 flex gap-8">
+                <span class="story-kicker text-[10px] tracking-[6px] uppercase text-brandRed font-semibold">A Story Told In Three Turns</span>
+                <div class="space-y-8 lg:sticky lg:top-32 self-start">
+                    <h2 id="story-heading" class="font-serif text-4xl md:text-6xl font-light leading-tight">
+                        From a closed door to a room that belongs to her.
+                    </h2>
+                    <p class="text-warmWhite/60 font-light text-sm md:text-base leading-relaxed">
+                        Every SSK center is built like a narrative arc: name the barrier, place the tools nearby, then let the family author the next chapter.
+                    </p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-8 lg:pl-16 lg:border-l border-warmWhite/10 space-y-20">
+                <article class="story-step relative max-w-3xl" data-step="01">
+                    <span class="text-[10px] tracking-[5px] uppercase text-brandRed font-semibold">First Turn / Access</span>
+                    <h3 class="font-serif text-3xl md:text-5xl font-light leading-tight mt-4 mb-5">
+                        The child who could not reach school reaches a lab.
+                    </h3>
+                    <p class="text-warmWhite/60 font-light leading-relaxed">
+                        The first intervention is not a speech. It is a working table, a tablet, a science kit, and a mentor who waits long enough for curiosity to become confidence.
+                    </p>
+                </article>
+
+                <article class="story-step relative max-w-3xl ml-auto" data-step="02">
+                    <span class="text-[10px] tracking-[5px] uppercase text-brandRed font-semibold">Second Turn / Income</span>
+                    <h3 class="font-serif text-3xl md:text-5xl font-light leading-tight mt-4 mb-5">
+                        The mother who carried unpaid skill enters the market by name.
+                    </h3>
+                    <p class="text-warmWhite/60 font-light leading-relaxed">
+                        Tailoring, weaving, and design training become pricing power. Her work is recorded, paid, and connected to a guild that can negotiate beyond one household.
+                    </p>
+                </article>
+
+                <article class="story-step relative max-w-3xl" data-step="03">
+                    <span class="text-[10px] tracking-[5px] uppercase text-brandRed font-semibold">Third Turn / Agency</span>
+                    <h3 class="font-serif text-3xl md:text-5xl font-light leading-tight mt-4 mb-5">
+                        The family stops being a case file and becomes a local institution.
+                    </h3>
+                    <p class="text-warmWhite/60 font-light leading-relaxed">
+                        When education and income move together, attendance improves, health decisions sharpen, and the community sees a model that can be repeated without spectacle.
+                    </p>
+                </article>
+            </div>
         </div>
     </section>
 
@@ -866,23 +963,57 @@
             const tag = document.getElementById(elementId);
             if (!tag) return;
 
-            const array = tag.innerText.split(' ');
+            const originalLines = tag.innerHTML
+                .trim()
+                .split(/<br\s*\/?>/i)
+                .map(line => line.replace(/\s+/g, ' ').trim())
+                .filter(Boolean);
             tag.innerHTML = '';
 
-            array.forEach(word => {
-                const spanMaskContainer = document.createElement('span');
-                spanMaskContainer.classList.add('reveal-word');
+            originalLines.forEach((line, lineIndex) => {
+                if (lineIndex > 0) tag.appendChild(document.createElement('br'));
 
-                const targetWordSpan = document.createElement('span');
-                targetWordSpan.innerText = word;
+                line.split(' ').forEach(word => {
+                    const spanMaskContainer = document.createElement('span');
+                    spanMaskContainer.classList.add('reveal-word');
 
-                spanMaskContainer.appendChild(targetWordSpan);
-                tag.appendChild(spanMaskContainer);
+                    const targetWordSpan = document.createElement('span');
+                    targetWordSpan.innerText = word;
+
+                    spanMaskContainer.appendChild(targetWordSpan);
+                    tag.appendChild(spanMaskContainer);
+                });
+            });
+        }
+
+        function transformLines(elementId) {
+            const tag = document.getElementById(elementId);
+            if (!tag) return;
+
+            const lines = tag.innerHTML
+                .trim()
+                .split(/<br\s*\/?>/i)
+                .map(line => line.replace(/\s+/g, ' ').trim())
+                .filter(Boolean);
+            tag.innerHTML = '';
+
+            lines.forEach((line, index) => {
+                const lineMask = document.createElement('span');
+                lineMask.className = 'line-mask';
+
+                const lineContent = document.createElement('span');
+                lineContent.innerText = line;
+
+                lineMask.appendChild(lineContent);
+                tag.appendChild(lineMask);
+                if (index < lines.length - 1) tag.appendChild(document.createElement('br'));
             });
         }
 
         transformTypography('hero-headline');
         transformTypography('manifesto-text');
+        transformLines('about-heading');
+        transformLines('story-heading');
 
         window.addEventListener('load', () => {
 
@@ -907,6 +1038,25 @@
                 duration: 1.2,
                 ease: "power3.out"
             }, "-=0.9")
+            .from("#hero-kinetic-strip .kinetic-word", {
+                y: 18,
+                opacity: 0,
+                stagger: 0.16,
+                duration: 0.75,
+                ease: "power3.out"
+            }, "-=0.8")
+            .to("#hero-kinetic-strip .kinetic-word", {
+                "--underline": "100%",
+                stagger: 0.12,
+                duration: 0.9,
+                ease: "power3.out"
+            }, "-=0.55")
+            .from("#hero-side-note", {
+                x: 36,
+                opacity: 0,
+                duration: 1.1,
+                ease: "power3.out"
+            }, "-=0.9")
             .from("#hero button", {
                 y: 20,
                 opacity: 0,
@@ -925,6 +1075,63 @@
                 },
                 yPercent: 12,
                 ease: "none"
+            });
+
+            gsap.to("#about-heading .line-mask > span", {
+                scrollTrigger: {
+                    trigger: "#about-heading",
+                    start: "top 78%",
+                    once: true
+                },
+                y: "0%",
+                opacity: 1,
+                stagger: 0.16,
+                duration: 1.1,
+                ease: "power4.out"
+            });
+
+            gsap.to("#story-heading .line-mask > span", {
+                scrollTrigger: {
+                    trigger: "#story-arc",
+                    start: "top 70%",
+                    once: true
+                },
+                y: "0%",
+                opacity: 1,
+                stagger: 0.16,
+                duration: 1.15,
+                ease: "power4.out"
+            });
+
+            document.querySelectorAll('.story-step').forEach((step) => {
+                const stepTimeline = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: step,
+                        start: "top 74%",
+                        end: "bottom 48%",
+                        toggleClass: { targets: step, className: "is-active" },
+                        once: false
+                    }
+                });
+
+                stepTimeline.from(step.querySelector('span'), {
+                    y: 18,
+                    opacity: 0,
+                    duration: 0.6,
+                    ease: "power3.out"
+                })
+                .from(step.querySelector('h3'), {
+                    y: 34,
+                    opacity: 0,
+                    duration: 0.9,
+                    ease: "power3.out"
+                }, "-=0.3")
+                .from(step.querySelector('p'), {
+                    y: 22,
+                    opacity: 0,
+                    duration: 0.75,
+                    ease: "power3.out"
+                }, "-=0.45");
             });
 
             // Smooth mask-reveal trigger configurations
