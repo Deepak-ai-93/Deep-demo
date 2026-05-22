@@ -156,12 +156,54 @@
 </head>
 <body class="bg-warmCream text-charcoal font-sans antialiased selection:bg-brandRed selection:text-warmWhite overflow-x-hidden">
 
-    <!-- Site Logo (top-left) -->
-    <header class="fixed top-6 left-6 z-50"> 
-        <a href="/" aria-label="SSK Home">
-            <img src="https://sssk.ngo/wp-content/uploads/2025/08/logo.png.webp" alt="SSK Logo" class="h-12 w-auto shadow-sm bg-warmWhite/60 rounded-sm p-1">
-        </a>
+    <!-- Responsive Sticky Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-warmCream/95 backdrop-blur-sm border-b border-sandSoft">
+        <div class="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8 py-3 md:py-4">
+            <a href="/" class="flex items-center gap-3" aria-label="SSK Home">
+                <img src="https://sssk.ngo/wp-content/uploads/2025/08/logo.png.webp" alt="SSK Logo" class="h-10 md:h-12 w-auto shadow-sm bg-warmWhite/60 rounded-sm p-1">
+                <span class="hidden md:inline font-serif text-lg text-charcoal">SSK</span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-6" aria-label="Primary">
+                <a href="#about" class="editorial-link text-sm text-charcoal hover:text-brandRed">About</a>
+                <a href="#chapters" class="editorial-link text-sm text-charcoal hover:text-brandRed">Programs</a>
+                <a href="#gallery-grid" class="editorial-link text-sm text-charcoal hover:text-brandRed">Gallery</a>
+                <a href="#impact-metrics" class="editorial-link text-sm text-charcoal hover:text-brandRed">Impact</a>
+                <a href="#donate-drawer" class="px-4 py-2 bg-brandRed text-warmWhite rounded-full text-xs">Donate</a>
+            </nav>
+
+            <div class="md:hidden flex items-center gap-3">
+                <button id="mobile-menu-button" aria-controls="mobile-menu" aria-expanded="false" class="p-2 rounded-md bg-warmWhite/60 border border-sandSoft" onclick="toggleMobileMenu()">
+                    <span class="sr-only">Open menu</span>
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden border-t border-sandSoft bg-warmWhite/95">
+            <div class="px-4 py-3 space-y-3">
+                <a href="#about" class="block text-charcoal" onclick="toggleMobileMenu()">About</a>
+                <a href="#chapters" class="block text-charcoal" onclick="toggleMobileMenu()">Programs</a>
+                <a href="#gallery-grid" class="block text-charcoal" onclick="toggleMobileMenu()">Gallery</a>
+                <a href="#impact-metrics" class="block text-charcoal" onclick="toggleMobileMenu()">Impact</a>
+                <a href="#donate-drawer" class="block text-charcoal font-semibold py-2" onclick="toggleDrawer('donate-drawer'); toggleMobileMenu();">Donate</a>
+            </div>
+        </div>
     </header>
+
+    <!-- Spacer to offset fixed header -->
+    <div class="h-16 md:h-20"></div>
+
+    <script>
+        function toggleMobileMenu(){
+            const btn = document.getElementById('mobile-menu-button');
+            const menu = document.getElementById('mobile-menu');
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', String(!expanded));
+            menu.classList.toggle('hidden');
+        }
+    </script>
 
     <!-- Film Grain Texture Overlay -->
     <div class="film-grain"></div>
