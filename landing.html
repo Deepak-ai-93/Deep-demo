@@ -173,6 +173,10 @@
             min-height: 100vh;
         }
 
+        .hero-mobile-hint {
+            display: none;
+        }
+
         .hero-image-frame {
             position: relative;
             overflow: hidden;
@@ -244,6 +248,54 @@
         }
 
         @media (max-width: 768px) {
+            #hero {
+                height: 100svh;
+                min-height: 100svh;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                touch-action: pan-x pan-y;
+            }
+
+            #hero-horizontal-track {
+                height: 100%;
+                width: max-content;
+            }
+
+            .hero-panel {
+                width: 100vw;
+                min-height: 100svh;
+                max-height: 100svh;
+                overflow-y: auto;
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+            }
+
+            .hero-panel h2 {
+                font-size: 2.4rem;
+                line-height: 1.08;
+            }
+
+            .hero-image-frame {
+                min-height: 42svh;
+            }
+
+            .hero-caption {
+                left: 1rem;
+                right: 1rem;
+                bottom: 1rem;
+            }
+
+            .hero-caption p {
+                font-size: 1.35rem;
+                line-height: 1.12;
+            }
+
+            .hero-mobile-hint {
+                display: flex;
+            }
+
             .story-kicker {
                 writing-mode: horizontal-tb;
             }
@@ -335,8 +387,8 @@
             <div class="absolute inset-0 bg-gradient-to-t from-warmCream via-transparent to-warmCream/10"></div>
         </div>
 
-        <div id="hero-horizontal-track" class="relative z-10 flex flex-col md:flex-row md:h-full md:w-max">
-            <article id="hero-panel-intro" class="hero-panel w-full md:w-screen shrink-0 grid grid-cols-1 xl:grid-cols-12 gap-10 items-center px-8 md:px-24 py-20 md:py-0">
+        <div id="hero-horizontal-track" class="relative z-10 flex flex-row h-full w-max">
+            <article id="hero-panel-intro" class="hero-panel w-screen shrink-0 grid grid-cols-1 xl:grid-cols-12 gap-10 items-center px-6 md:px-24 py-12 md:py-0">
                 <div class="xl:col-span-7 max-w-5xl space-y-8">
                     <span class="text-[11px] tracking-[6px] uppercase text-brandRed font-semibold block mb-2">A Grassroots Action Collective</span>
                     <h1 class="font-serif text-4xl sm:text-6xl md:text-[5.5rem] font-light tracking-tight leading-[1.1] text-charcoal" id="hero-headline">
@@ -384,9 +436,9 @@
                 </div>
             </article>
 
-            <article class="hero-panel w-full md:w-screen shrink-0 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center px-8 md:px-24 py-20 md:py-0 bg-warmWhite/88">
+            <article class="hero-panel w-screen shrink-0 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 items-center px-6 md:px-24 py-12 md:py-0 bg-warmWhite/88">
                 <div class="lg:col-span-7">
-                    <div class="hero-image-frame h-[64vh] rounded-sm">
+                    <div class="hero-image-frame h-[48svh] md:h-[64vh] rounded-sm">
                         <span class="hero-image-index">03</span>
                         <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1400" alt="Students gathered around learning materials with a teacher">
                         <div class="hero-caption">
@@ -404,7 +456,7 @@
                 </div>
             </article>
 
-            <article class="hero-panel w-full md:w-screen shrink-0 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center px-8 md:px-24 py-20 md:py-0 bg-charcoal text-warmWhite">
+            <article class="hero-panel w-screen shrink-0 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 items-center px-6 md:px-24 py-12 md:py-0 bg-charcoal text-warmWhite">
                 <div class="lg:col-span-5 space-y-6 order-2 lg:order-1">
                     <span class="text-[10px] tracking-[6px] uppercase text-brandRed font-semibold">Scene Two / Income</span>
                     <h2 class="font-serif text-4xl md:text-6xl font-light leading-tight">Her skill enters the market with a name.</h2>
@@ -412,8 +464,8 @@
                         The camera moves from classroom to workshop. Needles, textiles, ledgers, and collective pricing turn quiet skill into visible economic agency.
                     </p>
                 </div>
-                <div class="lg:col-span-7 order-1 lg:order-2 grid grid-cols-2 gap-5">
-                    <div class="hero-image-frame h-[58vh] rounded-sm">
+                <div class="lg:col-span-7 order-1 lg:order-2 grid grid-cols-2 gap-4 md:gap-5">
+                    <div class="hero-image-frame h-[46svh] md:h-[58vh] rounded-sm">
                         <span class="hero-image-index">04</span>
                         <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1000" alt="Women working together in a craft and design session">
                         <div class="hero-caption">
@@ -421,7 +473,7 @@
                             <p class="font-serif text-2xl leading-tight mt-2">Hands that were unseen become organized work.</p>
                         </div>
                     </div>
-                    <div class="hero-image-frame h-[44vh] rounded-sm self-end">
+                    <div class="hero-image-frame h-[34svh] md:h-[44vh] rounded-sm self-end">
                         <span class="hero-image-index">05</span>
                         <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1000" alt="Women planning and collaborating around a shared work table">
                         <div class="hero-caption">
@@ -432,9 +484,9 @@
                 </div>
             </article>
 
-            <article class="hero-panel w-full md:w-screen shrink-0 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center px-8 md:px-24 py-20 md:py-0 bg-warmCream">
+            <article class="hero-panel w-screen shrink-0 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 items-center px-6 md:px-24 py-12 md:py-0 bg-warmCream">
                 <div class="lg:col-span-7">
-                    <div class="hero-image-frame h-[64vh] rounded-sm">
+                    <div class="hero-image-frame h-[48svh] md:h-[64vh] rounded-sm">
                         <span class="hero-image-index">06</span>
                         <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1400" alt="Women leaders gathered for community consultation">
                         <div class="hero-caption">
@@ -465,6 +517,12 @@
         <div class="hidden md:flex absolute bottom-12 right-8 md:right-24 z-20 items-center gap-4 text-[10px] tracking-[4px] uppercase text-clayGray">
             <span>Scroll The Opening Story</span>
             <span class="w-12 h-[1px] bg-charcoal/20 relative overflow-hidden">
+                <span class="absolute top-0 left-0 h-full w-1/2 bg-brandRed animate-[ping_1.5s_infinite]"></span>
+            </span>
+        </div>
+        <div class="hero-mobile-hint absolute bottom-5 left-6 right-6 z-20 items-center justify-between text-[10px] tracking-[3px] uppercase text-clayGray pointer-events-none">
+            <span>Swipe Story</span>
+            <span class="w-16 h-[1px] bg-charcoal/20 relative overflow-hidden">
                 <span class="absolute top-0 left-0 h-full w-1/2 bg-brandRed animate-[ping_1.5s_infinite]"></span>
             </span>
         </div>
